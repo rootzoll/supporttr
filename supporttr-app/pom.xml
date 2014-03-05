@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>SupporttrApp</artifactId>
+	<packaging>apk</packaging>
+	<version>0.01-test</version>
+	<name>Supporttr</name>
+
+	<parent>
+		<groupId>de.geektank.bitcoin.supporttr</groupId>
+		<artifactId>base</artifactId>
+		<version>1</version>
+	</parent>
+
+	<dependencies>
+
+		<!-- android.*, java.*, javax.* -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>4.0.1.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- android.annotation.* -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>annotations</artifactId>
+			<!-- version should match android artifact, but not available on maven central -->
+			<version>4.1.1.4</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- android.support.v4.* -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>support-v4</artifactId>
+			<version>r7</version>
+		</dependency>
+
+		<!-- com.google.bitcoin.* -->
+		<dependency>
+			<groupId>com.google</groupId>
+			<artifactId>bitcoinj</artifactId>
+			<version>0.11.1</version>
+		</dependency>
+
+                <!-- org.junit.* -->
+                <dependency>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                        <version>4.11</version>
+                        <scope>test</scope>
+                </dependency>
+
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+						<artifactId>android-maven-plugin</artifactId>
+						<configuration>
+							<release>true</release>
+							<proguard>
+								<skip>true</skip>
+							</proguard>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<!-- to build, run: mvn clean install -->
+	<!-- then to install on an android device, run: mvn android:deploy -->
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<configuration>
+					<excludeJarResources>
+						<excludeJarResource>.*\.jar$</excludeJarResource>
+					</excludeJarResources>
+					<sdk>
+						<platform>14</platform>
+					</sdk>
+					<sign>
+						<debug>both</debug>
+					</sign>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+					<additionalProjectnatures>
+						<projectnature>com.android.ide.eclipse.adt.AndroidNature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>com.android.ide.eclipse.adt.ResourceManagerBuilder</buildcommand>
+						<buildcommand>com.android.ide.eclipse.adt.PreCompilerBuilder</buildcommand>
+						<buildcommand>com.android.ide.eclipse.adt.ApkBuilder</buildcommand>
+					</additionalBuildcommands>
+					<classpathContainers>
+						<classpathContainer>com.android.ide.eclipse.adt.ANDROID_FRAMEWORK</classpathContainer>
+						<!-- This is a workaround: we do not want JRE_CONTAINER, however if we remove it, it will be automatically added, and 
+							placed first. So we add it in the second position, so that the project is recognized as an Android project. -->
+						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+					</classpathContainers>
+					<excludes>
+						<exclude>android:android</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

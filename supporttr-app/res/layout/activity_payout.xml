@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".PayoutActivity" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+        <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payout_info" />
+
+    <TextView
+        android:id="@+id/payouDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+    <TextView
+        android:id="@+id/payouHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="6dp"
+        android:text="@string/payout_hint"/>
+    
+        <Button
+        android:id="@+id/forwardPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payout_requestpayment" />
+        
+        <Button
+        android:id="@+id/skipPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payout_skippayment" />
+    
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
