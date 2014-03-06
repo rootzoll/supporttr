@@ -1,6 +1,7 @@
 package de.geektank.bitcoin.supporttr.tools;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.bitcoin.protocols.payments.Protos;
 import org.bitcoin.protocols.payments.Protos.PaymentRequest;
@@ -91,7 +92,8 @@ public class BitcoinTools {
 		return Math.round((amount * Long.parseLong("100000000")));
 	}
 	
-	public static String double2mBTC(double amount) {
-		return "TODO:"+amount+"BTC";
+	public static String double2mBTC(Locale locale, double amount) {
+		double mBtc = (double) (amount * Double.parseDouble("1000"));
+		return String.format(locale, "%.2f", mBtc);
 	}
 }

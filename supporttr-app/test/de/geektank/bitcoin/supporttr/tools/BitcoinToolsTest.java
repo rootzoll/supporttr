@@ -1,6 +1,9 @@
 package de.geektank.bitcoin.supporttr.tools;
 
+import java.util.Locale;
+
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class BitcoinToolsTest {
@@ -48,6 +51,12 @@ public class BitcoinToolsTest {
 		assertEquals(Long.parseLong("100000000"), BitcoinTools.double2NanoLong(1.0));
 		assertEquals(Long.parseLong("10000000"), BitcoinTools.double2NanoLong(0.1));
 	} 
-	
+
+	@Test
+	public void double2mBTCTest() {
+		assertEquals("1000.00", BitcoinTools.double2mBTC(Locale.US, Double.parseDouble("1")));
+		assertEquals("1.00", BitcoinTools.double2mBTC(Locale.US, Double.parseDouble("0.001")));
+		assertEquals("3.21", BitcoinTools.double2mBTC(Locale.US, Double.parseDouble("0.00321")));
+	}
 	
 }

@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.geektank.bitcoin.supporttr.data.PayoutTransaction;
 import de.geektank.bitcoin.supporttr.data.SupportItem;
+import de.geektank.bitcoin.supporttr.tools.AndroidToolsDependencies;
 import de.geektank.bitcoin.supporttr.tools.BitcoinTools;
 import de.geektank.bitcoin.supporttr.tools.SupporttrTools;
 import de.geektank.bitcoin.supporttr.wallets.WalletManager.WalletManagerPersitence;
@@ -27,7 +29,7 @@ import android.util.Log;
 public class CoreTools implements WalletManagerPersitence {
 
 	// SWITCH ON TRUE WHEN DEVELOPING
-	public static final boolean RUNNING_ON_TESTNET = true;
+	public static final boolean RUNNING_ON_TESTNET = false;
 	
 	static final String TAG = "Coretools";
 		
@@ -35,7 +37,7 @@ public class CoreTools implements WalletManagerPersitence {
 	static CoreTools singleton;
 	
 	private ArrayList<SupportItem> supportItems;
-	private Integer budget;
+	private double budget;
 	private Long lastPayout;
 	private Alarm alarm;
 	
@@ -46,7 +48,8 @@ public class CoreTools implements WalletManagerPersitence {
 		
 	public static void init(Context context) {
 		sharedPref = context.getSharedPreferences("storageV1", Context.MODE_PRIVATE);
-	}
+		AndroidToolsDependencies.checkDependencies(context);
+	} 
 	
 	private CoreTools() {
 		
@@ -59,11 +62,14 @@ public class CoreTools implements WalletManagerPersitence {
 		loadState();
 	}
 	
-	public Integer getBudget() {
+	public double getBudget() {
 		return budget;
 	}
 
-	public void setBudget(Integer budget) {
+	/** 
+	 * @param budget BTC float value
+	 */
+	public void setBudget(double budget) {
 		this.budget = budget;
 		persistState();
 	}
@@ -117,7 +123,7 @@ public class CoreTools implements WalletManagerPersitence {
 		   String sItems = sharedPref.getString("items", null);
 		   if (sItems!=null) this.supportItems = (ArrayList<SupportItem>) fromString(sItems);
 		   String sBudget = sharedPref.getString("budget", null);
-		   if (sBudget!=null) this.budget = (Integer) fromString(sBudget);
+		   if (sBudget!=null) this.budget = (Double) fromString(sBudget);
 		   String sPayout = sharedPref.getString("lastpayout", null);
 		   if (sPayout!=null) this.lastPayout = (Long) fromString(sPayout);
 		   Log.i(TAG, "loadState DONE");
@@ -162,7 +168,7 @@ public class CoreTools implements WalletManagerPersitence {
 		return null;
 	}
     
-	public float calcPayoutForSupportItem(SupportItem item) {
+	public double calcPayoutForSupportItem(SupportItem item) {
 		
 		// sum all weight
 		float sum = 0;
@@ -203,7 +209,8 @@ public class CoreTools implements WalletManagerPersitence {
 			PayoutTransaction ta = new PayoutTransaction();
 			ta.addr = item.address;
 			ta.note = item.comment;
-			ta.amount = (double) (calcPayoutForSupportItem(item) * 1000);
+			ta.amount = (double) (calcPayoutForSupportItem(item));
+			Log.i(TAG, "AMOUNT("+ta.amount+")"); 
 			result.add(ta);
 		}
 		return result;
@@ -215,7 +222,7 @@ public class CoreTools implements WalletManagerPersitence {
 		for (PayoutTransaction payoutTransaction : list) {
 			count++;
 			buff.append(count + ". " + context.getString(R.string.payout_supporting) + " " + payoutTransaction.note+"\n");
-			buff.append(context.getString(R.string.payout_sending) + " " + BitcoinTools.double2mBTC(payoutTransaction.amount) +"mBTC "+ context.getString(R.string.payout_to)  +" "+payoutTransaction.addr+"\n\n");
+			buff.append(context.getString(R.string.payout_sending) + " " + BitcoinTools.double2mBTC(Locale.getDefault(), payoutTransaction.amount) +"mBTC "+ context.getString(R.string.payout_to)  +" "+payoutTransaction.addr+"\n\n");
 		}
 		return buff.toString();
 	}

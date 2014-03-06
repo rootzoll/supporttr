@@ -16,6 +16,7 @@
 
 package de.schildbach.wallet.integration.android;
 
+import de.geektank.bitcoin.supporttr.CoreTools;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -236,17 +237,24 @@ public final class BitcoinIntegration
 			redirectToDownload(activity);
 	}
 
+	@SuppressWarnings("unused")
 	private static void redirectToDownload(final Context context)
 	{
-		Toast.makeText(context, "No Bitcoin application found.\nPlease install Bitcoin Wallet.", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, "Please install a supported Bitcoin Wallet.", Toast.LENGTH_LONG).show();
 
-		final Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.schildbach.wallet"));
-		final Intent binaryIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/bitcoin-wallet/downloads/list"));
+		Intent marketIntent;
+		if (CoreTools.RUNNING_ON_TESTNET) {
+			marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.schildbach.wallet_test"));
+		} else {
+			marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.schildbach.wallet"));
+		}
+		
+		Intent binaryIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/bitcoin-wallet/downloads/list"));
 
 		final PackageManager pm = context.getPackageManager();
 		if (pm.resolveActivity(marketIntent, 0) != null)
 			context.startActivity(marketIntent);
-		else if (pm.resolveActivity(binaryIntent, 0) != null)
+		else if ((!CoreTools.RUNNING_ON_TESTNET) && (pm.resolveActivity(binaryIntent, 0) != null))
 			context.startActivity(binaryIntent);
 		// else out of luck
 	}

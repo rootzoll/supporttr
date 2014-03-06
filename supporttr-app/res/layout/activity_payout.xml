@@ -20,18 +20,17 @@
             android:orientation="vertical" >
             
         <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textAtTheTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/payout_info" />
 
-    <TextView
-        android:id="@+id/payouDetails"
-        android:layout_width="wrap_content"
+     <LinearLayout
+        android:id="@+id/itemsLayout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:orientation="vertical" >
+     </LinearLayout>
             
     <TextView
         android:id="@+id/payouHint"
@@ -39,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="6dp"
-        android:text="@string/payout_hint"/>
+        android:text=""/>
     
         <Button
         android:id="@+id/forwardPayment"

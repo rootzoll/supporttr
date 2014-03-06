@@ -1,8 +1,13 @@
 package de.geektank.bitcoin.supporttr;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import de.geektank.bitcoin.supporttr.R;
 import de.geektank.bitcoin.supporttr.data.SupportItem;
+import de.geektank.bitcoin.supporttr.tools.AndroidTools;
 import de.geektank.bitcoin.supporttr.tools.BitcoinTools;
+import de.geektank.bitcoin.supporttr.web.BtcPriceInfo;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,8 +49,8 @@ public class StartActivity extends Activity {
 		scanAddress = (Button) findViewById(R.id.scanAddress);
 		scanAddress.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent("com.google.zxing.client.android.SCAN"); 
-				intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE"); 
+				Intent intent = AndroidTools.getQrCodeReaderIntent(StartActivity.this);
+				if (intent==null) return;
 				startActivityForResult(intent, 0);
 			}
 		});
@@ -53,7 +58,7 @@ public class StartActivity extends Activity {
 		mbtcInfo = (TextView) findViewById(R.id.mbtcinfo);
 		
 		mbtcSpending = (EditText) findViewById(R.id.inputMBTC);
-		if (CoreTools.getInstance().getBudget()!=0) mbtcSpending.setText(""+CoreTools.getInstance().getBudget());
+		if (CoreTools.getInstance().getBudget()!=0) mbtcSpending.setText(""+Math.round(CoreTools.getInstance().getBudget()*1000));
 		
 		mbtcSpending.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -64,11 +69,21 @@ public class StartActivity extends Activity {
 
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 		});
+		
+		BtcPriceInfo.updateBtcPrice(this, new BtcPriceInfo.PriceUpdateListener() {
+			@Override
+			public void onNewPrice() {
+				updateMBTCInfo();
+			}
+		});
+		
 		updateMBTCInfo();
 		
 	}
 	
 	private void updateMBTCInfo() {
+		
+		if ((mbtcSpending.getText()==null) || (mbtcSpending.getText().toString()==null)) return;
 		
 		if (mbtcSpending.getText().toString().length()==0) {
 			mbtcInfo.setText("<-- " + getString(R.string.start_pls_set));
@@ -77,7 +92,22 @@ public class StartActivity extends Activity {
 			return;
 		}
 		
-		int mbtc = Integer.parseInt(mbtcSpending.getText().toString());
+		int mbtc = 0;
+		try {
+		
+			if (mbtcSpending.getText().toString().contains(".")) {
+				mbtc = NumberFormat.getNumberInstance(Locale.US).parse(mbtcSpending.getText().toString()).intValue();
+			} else
+			if (mbtcSpending.getText().toString().contains(",")) {
+				mbtc = NumberFormat.getNumberInstance(Locale.GERMAN).parse(mbtcSpending.getText().toString()).intValue();
+			} else {
+				mbtc = Integer.parseInt(mbtcSpending.getText().toString());
+			}
+			
+		} catch (Exception e) {
+			Log.w(TAG, "Not able to parse number ("+mbtcSpending.getText().toString()+")");
+			return;
+		}
 		
 		if (mbtc < 0) {
 			mbtcSpending.setText("0");
@@ -89,15 +119,25 @@ public class StartActivity extends Activity {
 			return;
 		}
 		
+		double btc = ((mbtc*1.0) / (1000*1.0));
+		
 		if (mbtc==0) {
 			mbtcInfo.setText("<-- " + getString(R.string.start_pls_set));
 			mbtcInfo.setTextColor(Color.RED);
 		} else {
-			mbtcInfo.setText(" " + getString(R.string.start_ok));
-			mbtcInfo.setTextColor(Color.GREEN);
+			
+			if (BtcPriceInfo.gotInfo()) {
+				mbtcInfo.setText("\u2248 " + BtcPriceInfo.convertToLocaleFiat(btc));
+				mbtcInfo.setTextColor(Color.BLACK);
+			} else {
+				mbtcInfo.setText(" " + getString(R.string.start_ok));
+				mbtcInfo.setTextColor(Color.GREEN);
+			}
+		
 		}
 		
-		if (mbtc!=CoreTools.getInstance().getBudget()) CoreTools.getInstance().setBudget(mbtc);
+		Log.i(TAG,"mBTC from GUI:" + mbtc+ " --> " + btc + "BTC");
+		if (mbtc!=CoreTools.getInstance().getBudget()) CoreTools.getInstance().setBudget(btc);
 	}
 
 	@Override

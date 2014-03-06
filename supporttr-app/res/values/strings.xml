@@ -9,41 +9,64 @@
     <string name="start_mbtc">mBTC</string>
     <string name="start_instruction">Collect bitcoin addresses of people and projects you want to support on the regular .. Bloggers, Podcasters, DJs, Bands ... at the end of the month your budget will get automatically split between all of them. Just keep on collection.</string>
     <string name="supports_hello">Supports</string>
-    <string name="start_pls_set">1 to 5 mBTC would be enough for the beginning</string>
+    <string name="start_pls_set">1 to 10 mBTC would be enough for the beginning</string>
     <string name="start_ok"> OK :)</string>
     <string name="info_addressNotValid">Its not a valid Bitcoin Address.</string>
     <string name="start_scan_address">Scan Bitcoin QR-Code</string>
     <string name="start_enter_address">Enter Bitcoin Address</string>
     <string name="title_activity_start">StartActivity</string>
     <string name="title_activity_supports">SupportsActivity</string>
-    <string name="items_noitems">You support nobody yet .. use options on the start tab to scan or enter bitcoin addresses.</string>
+    <string name="items_noitems">You support nobody yet .. change back to the start tab to scan or enter bitcoin addresses.</string>
+    <string name="items_nobudget">Not budget set .. change back to the start tab and enter a value.</string>
     <string name="items_info">You support the following addresses:</string>
     <string name="items_deleteTitle">Cancel Support</string>
     <string name="items_delete">Do you really want to cancel support for: </string>
     <string name="items_share">next donation will be</string>
     <string name="items_mbtc">mBTC</string>
     <string name="items_payoutino">Next donation is scheduled for:\n</string>
-    <string name="items_payoutdetails">On this date the app will request you to authorize the payment from your local bitcoin wallet.</string>
+    <string name="items_payoutdetails">On this date the app will request you to authorize the payment from your local bitcoin wallet by notification.</string>
     <string name="items_forcepayout">Force Donations Now (Demo)</string>
     
+    <string name="notice_triggerNotification">Continue from notification panel.</string>
+    
     <string name="title_activity_payout">Supporttr - Monthly Donations</string>
-    <string name="payout_info">Ready to do your monthly supporttr donations:</string>
+    <string name="payout_info">These are your pending monthly donations:\n</string>
     <string name="payout_requestpayment">Forward Donations to your local Wallet</string>
     <string name="payout_skippayment">Skip this Month</string>
-    <string name="payout_supporting">Supporting</string>
+    <string name="payout_done">Done</string>
+    <string name="payout_supporting">Donation</string>
     <string name="payout_sending">Sending</string>
-    <string name="payout_to">to address</string>
-    <string name="payout_hint">NOTICE: This is a proof-of-concent integration with your local bitcoin wallet. At the moment every single support transaction is needing your patient interaction and separate bitcoin transaction fee. In future version there will be just one transaction with multiple outputs. Also not tested with all wallets out there yet - tested with Schildbach Wallet. :)</string>
-    
+    <string name="payout_to">for</string>
+
     <string name="noti_title">Supporttr</string>
     <string name="noti_text">Its time for your monthly Bitcoin Supporttr donations :)</string>
     <string name="noti_content"></string>
     <string name="noti_ticker">Supporttr - monthly donations are ready</string>
+    <string name="noti_thankyou">Thank You :)</string>
+    <string name="noti_close">Close</string>
     
     <string name="menu_info_settings">Nothing to set yet</string>
-    <string name="menu_info_uber">Supporttr 0.1 Proof-Of-Concept\nBerlin Texas Hackathon 2014 Demo\nby Christian@Rotzoll.de</string>
+    <string name="menu_info_uber">Supporttr 0.23 First Release\nTexas Bitcoin Hackathon 2014\nwww.supporttr.net\nby Christian@Rotzoll.de</string>
     
     <string name="tab_start">Start</string>
     <string name="tab_support">Supports</string>
+    
+    <string name="info_qrreader_title">Missing App</string>
+    <string name="info_qrreader_text">Thanks for trying out Supporttr :) For easy input of Bitcoin addresses you need a QR-Code scanning app. Would you like to download one for free?</string>
+ 
+    <string name="info_walletmissing_title">Missing Bitcoin Wallet App</string>
+    <string name="info_walletmissing_text">For sending Bitcoin donations you need a wallet app. Would you like to download one for free?</string>
+    
+    <string name="info_walletunsupported_title">Unsupported Bitcoin Wallet</string>
+    <string name="info_walletunsupported_text">It seems that you have local Bitcoin wallet installed on your device - but its not tested with the Supporttr app yet. You can try if it works and let us know - but would you like to be on the safe side and download a supported wallet for free?</string>
+
+    <string name="info_walletKnc_title">Unsupported KNC Wallet</string>
+    <string name="info_walletKnc_text">You have only the KNC Wallet installed. Last time we checked they have deactivated their support for Bitcoin-URIs payments. Would you like to additionally download a supported wallet for free?</string>
+  
+    <string name="info_walletBlockchain_title">Unsupported Blockchain.info Wallet</string>
+    <string name="info_walletBlockcain_text">You have only the Blockchain.info Wallet installed. Last time we checked they had a bug in their support for Bitcoin-URIs payments. Would you like to additionally download a supported wallet for free?</string>
+    
+    <string name="info_walletNoPaymentRequest_title">Missing feature in your wallet app</string>    
+    <string name="info_walletNoPaymentRequest_text">As far as we know the wallet app you have installed has no support for the BIP70 payment protocol yet. So you need to authenticate every single donation manually and multiple Bitcoin transactions fees need to be paid in the process. Would you like to additionally download a wallet that supports this feature for free? Cancel to use your actual wallet.</string>
     
 </resources>

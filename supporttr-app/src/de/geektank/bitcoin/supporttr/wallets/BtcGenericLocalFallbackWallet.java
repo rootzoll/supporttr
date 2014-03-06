@@ -37,8 +37,7 @@ public class BtcGenericLocalFallbackWallet implements Wallet, PaymentActivityRes
 	@Override
 	public void onActivityResult(int resultCode, Intent data) {
 		
-		// TODO: anaylse result later
-		this.transactionsDone.add(transactionInTheWorks);
+		if (data!=null) this.transactionsDone.add(transactionInTheWorks);
 		
 		if (transactionsToGo.size()>0) {
 			pushNextResult();

@@ -10,8 +10,10 @@ import java.util.List;
 import de.geektank.bitcoin.supporttr.R;
 import de.geektank.bitcoin.supporttr.data.SupportItem;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -45,6 +47,14 @@ public class SupportsActivity extends Activity implements SupportsActivityListen
 		forcePayout = (Button) findViewById(R.id.forcePayout);
 		forcePayout.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(SupportsActivity.this, getString(R.string.notice_triggerNotification), Toast.LENGTH_LONG).show();
+					}
+				}, 2000);
+				
 				CoreTools.getInstance().triggerNotification(SupportsActivity.this);
 			}
 		});
@@ -64,14 +74,11 @@ public class SupportsActivity extends Activity implements SupportsActivityListen
 		Log.i(TAG, "rebuildSupportItemsList");
 		
 		String dateStr = null;
-		
 		Date date = new Date(CoreTools.getInstance().getNextPayout());
 		DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 		dateStr = dateFormat.format(date);
-		
 		dateStr = dateStr + " " + android.text.format.DateFormat.format("kk:mm:ss", date).toString();
-		
-		String text = getString(R.string.items_payoutino) + " " + dateStr;
+		String text = " " + getString(R.string.items_payoutino) + " " + dateStr;
 		payoutInfo.setText(text);
 		
 		itemsLayout.removeAllViews();
@@ -81,9 +88,17 @@ public class SupportsActivity extends Activity implements SupportsActivityListen
 		
 		if (items.size()==0) {
 			itemsInfo.setText(R.string.items_noitems);
+			itemsInfo.setTextColor(Color.RED);
 			forcePayout.setEnabled(false);
-		} else {
+		} else 
+		if (CoreTools.getInstance().getBudget()==0) {
+			itemsInfo.setText(R.string.items_nobudget);
+			itemsInfo.setTextColor(Color.RED);
+			forcePayout.setEnabled(false);
+		}
+		else {
 			itemsInfo.setText(R.string.items_info);	
+			itemsInfo.setTextColor(Color.BLACK);
 			forcePayout.setEnabled(true);
 		}
 		
@@ -115,7 +130,7 @@ public class SupportsActivity extends Activity implements SupportsActivityListen
 
 	public void updateSupportItems() {
 		for (String addr : this.itemInfoUpdateList.keySet()) {
-			this.itemInfoUpdateList.get(addr).onItemUpdate(addr);;
+			this.itemInfoUpdateList.get(addr).onItemUpdate(addr);
 		}
 	}
 	

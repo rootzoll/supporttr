@@ -1,8 +1,12 @@
 package de.geektank.bitcoin.supporttr.wallets;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import de.geektank.bitcoin.supporttr.CoreTools;
 import de.geektank.bitcoin.supporttr.data.PayoutTransaction;
 import de.geektank.bitcoin.supporttr.tools.BitcoinTools;
@@ -16,8 +20,13 @@ public class BtcSchildbachMultipleOutputsWallet implements Wallet {
 			@Override
 			public void onActivityResult(int resultCode, Intent data) {
 				
-				// TODO: analyse result later
-				paymentActivity.onPaymentComplete(WalletManager.CURRENCYCODE_BITCOIN, transactions);
+				List<PayoutTransaction> result = null;
+				if (data!=null) {
+					Bundle extra = data.getExtras();
+					if (extra.containsKey("transaction_hash")) result = transactions;
+				}
+				
+				paymentActivity.onPaymentComplete(WalletManager.CURRENCYCODE_BITCOIN, result);
 				
 			}
 		});
