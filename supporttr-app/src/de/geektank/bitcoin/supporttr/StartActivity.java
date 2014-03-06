@@ -224,6 +224,9 @@ public class StartActivity extends Activity {
 				
 				Log.i(TAG, "Stripped Address: "+value);
 				
+				if ((value!=null) && (value.contains("bitpay.com/cart"))) {
+					GuiTools.showInfo(StartActivity.this, getString(R.string.qrcode_bitpay));
+				} else
 				if (BitcoinTools.validateBitcoinAddress(value, CoreTools.RUNNING_ON_TESTNET)) {
 					SupportItem supportItem = new SupportItem();
 					supportItem.address = value;

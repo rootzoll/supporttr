@@ -29,7 +29,8 @@
         android:id="@+id/itemsLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:gravity="center" >
      </LinearLayout>
             
     <TextView

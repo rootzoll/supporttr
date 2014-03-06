@@ -16,14 +16,14 @@
     <string name="start_enter_address">Enter Bitcoin Address</string>
     <string name="title_activity_start">StartActivity</string>
     <string name="title_activity_supports">SupportsActivity</string>
-    <string name="items_noitems">You support nobody yet .. change back to the start tab to scan or enter bitcoin addresses.</string>
+    <string name="items_noitems">You support nobody yet .. change back to the Start tab to scan or enter Bitcoin addresses you like to donate to.</string>
     <string name="items_nobudget">Not budget set .. change back to the start tab and enter a value.</string>
     <string name="items_info">You support the following addresses:</string>
     <string name="items_deleteTitle">Cancel Support</string>
     <string name="items_delete">Do you really want to cancel support for: </string>
     <string name="items_share">next donation will be</string>
     <string name="items_mbtc">mBTC</string>
-    <string name="items_payoutino">Next donation is scheduled for:\n</string>
+    <string name="items_payoutino">Next donation round is scheduled for:\n</string>
     <string name="items_payoutdetails">On this date the app will request you to authorize the payment from your local bitcoin wallet by notification.</string>
     <string name="items_forcepayout">Force Donations Now (Demo)</string>
     
@@ -31,12 +31,13 @@
     
     <string name="title_activity_payout">Supporttr - Monthly Donations</string>
     <string name="payout_info">These are your pending monthly donations:\n</string>
-    <string name="payout_requestpayment">Forward Donations to your local Wallet</string>
-    <string name="payout_skippayment">Skip this Month</string>
+    <string name="payout_requestpayment">Send Donations</string>
+    <string name="payout_skippayment">Skip</string>
     <string name="payout_done">Done</string>
     <string name="payout_supporting">Donation</string>
     <string name="payout_sending">Sending</string>
     <string name="payout_to">for</string>
+    <string name="payout_ok">OK. Donation send.</string>
 
     <string name="noti_title">Supporttr</string>
     <string name="noti_text">Its time for your monthly Bitcoin Supporttr donations :)</string>
@@ -47,6 +48,8 @@
     
     <string name="menu_info_settings">Nothing to set yet</string>
     <string name="menu_info_uber">Supporttr 0.23 First Release\nTexas Bitcoin Hackathon 2014\nwww.supporttr.net\nby Christian@Rotzoll.de</string>
+
+    <string name="qrcode_bitpay">You scanned a BitPay QR-Code - they dont provide a Bitcoin address to be used in Supporttr. Maybe there is second QR-Code somewhere you can try?</string>
     
     <string name="tab_start">Start</string>
     <string name="tab_support">Supports</string>
@@ -69,4 +72,12 @@
     <string name="info_walletNoPaymentRequest_title">Missing feature in your wallet app</string>    
     <string name="info_walletNoPaymentRequest_text">As far as we know the wallet app you have installed has no support for the BIP70 payment protocol yet. So you need to authenticate every single donation manually and multiple Bitcoin transactions fees need to be paid in the process. Would you like to additionally download a wallet that supports this feature for free? Cancel to use your actual wallet.</string>
     
+    <string name="toast_installQrCodeScanner">Install it and then use back button.</string>
+    <string name="toast_installWallet">Install it, load some Bitcoin on it and start Supporttr again.</string>
+    
+    <string name="toast_noPayoutItems">You have no Bitcoin addresses in your collection to donate to.</string>
+    <string name="toast_noBugdet">You have not set a valid donation budget.</string>
+    
+    <string name="toast_walletPayment">Send Bitcoin, wait shortly and then use Back button.</string>
+      
 </resources>

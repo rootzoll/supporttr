@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PayoutActivity extends Activity implements PaymentActivity, SupportsActivityListener {
 	
@@ -70,11 +72,11 @@ public class PayoutActivity extends Activity implements PaymentActivity, Support
 		List<SupportItem> items = CoreTools.getInstance().getSupportItems();
 		
 		if (items.size()==0) {
-			// TODO: Print Info
+			Toast.makeText(this, getString(R.string.toast_noPayoutItems), Toast.LENGTH_LONG).show();
 			payoutButton.setEnabled(false);
 		} else 
 		if (CoreTools.getInstance().getBudget()==0) {
-			// TODO: Print Info
+			Toast.makeText(this, getString(R.string.toast_noBugdet), Toast.LENGTH_LONG).show();
 			payoutButton.setEnabled(false);
 		}
 		else {
@@ -152,7 +154,10 @@ public class PayoutActivity extends Activity implements PaymentActivity, Support
 	}
 	
 	public void forwardTrasactionsToWallet(AndroidToolsDependencies dependencies) {
-		if (transactionsBTC.size()>0) WalletManager.getInstance(dependencies, CoreTools.getInstance()).getBtcWallet().makePayment(this, transactionsBTC);	
+		if (transactionsBTC.size()>0) {
+			Toast.makeText(this, getString(R.string.toast_walletPayment), Toast.LENGTH_LONG).show();
+			WalletManager.getInstance(dependencies, CoreTools.getInstance()).getBtcWallet().makePayment(this, transactionsBTC);	
+		}
 	}
 
 	@Override
@@ -180,6 +185,15 @@ public class PayoutActivity extends Activity implements PaymentActivity, Support
 		
 		this.textAtTheTop.setVisibility(View.INVISIBLE);
 				
+		TextView ok = new TextView(this);
+		ok.setText(getString(R.string.payout_ok));
+		ok.setTextColor(Color.GREEN);
+		ok.setTextSize(ok.getTextSize()*2);
+		ok.setPadding(0, 0, 0, 20);
+		LinearLayout.LayoutParams layoutParamsText = new LinearLayout.LayoutParams(
+		LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		itemsLayout.addView(ok, layoutParamsText);
+		
 		ImageView i = new ImageView(PayoutActivity.this);
 		i.setImageResource(R.drawable.quote1);
 		i.setPadding(0, 0, 0, 25);
@@ -192,8 +206,7 @@ public class PayoutActivity extends Activity implements PaymentActivity, Support
 		LinearLayout nextLayout = new LinearLayout(this);
 		nextLayout.setOrientation(LinearLayout.HORIZONTAL);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-		LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        //layoutParams.setMargins(0, 5, 0, 5);
+		LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		itemsLayout.addView(nextLayout, layoutParams);
 		ImageView ni = new ImageView(this);
 		ni.setImageResource(R.drawable.clock_blue);
@@ -207,36 +220,13 @@ public class PayoutActivity extends Activity implements PaymentActivity, Support
 		dateStr = dateStr + " " + android.text.format.DateFormat.format("kk:mm:ss", date).toString();
 		String text = " " + getString(R.string.items_payoutino) + " " + dateStr;
 		tw.setText(text);
-		nextLayout.addView(tw);
-		
-		/*
-		
-		      <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-          <ImageView
-              android:id="@+id/imageView1"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingRight="4px"
-              android:paddingTop="10px"
-              android:src="@drawable/clock_blue" />
-          
-       <TextView
-        android:id="@+id/payoutInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-       
-       </LinearLayout>
-		
-		 */
-		
+		nextLayout.addView(tw);	
+		nextLayout.setPadding(2, 2, 2, 15);
 		
 		Button done = new Button(this);
+		done.setWidth(300);
+		done.setMaxWidth(300);
+		done.setMinimumWidth(200);
 		done.setText(R.string.noti_close);
 		done.setOnClickListener(new OnClickListener() {
 			@Override
@@ -244,7 +234,10 @@ public class PayoutActivity extends Activity implements PaymentActivity, Support
 				finish();
 			}
 		});
-		this.itemsLayout.addView(done);
+		
+		LinearLayout.LayoutParams layoutOk = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		itemsLayout.addView(done, layoutOk);
 	}
 
 	public void addItemUpdateListener(String addr, ItemUpdateListener listener) {

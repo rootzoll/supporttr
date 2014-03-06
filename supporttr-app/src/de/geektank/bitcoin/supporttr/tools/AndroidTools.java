@@ -1,6 +1,7 @@
 package de.geektank.bitcoin.supporttr.tools;
 
 import de.geektank.bitcoin.supporttr.CoreTools;
+import de.geektank.bitcoin.supporttr.R;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +14,8 @@ public class AndroidTools {
 	
 	public static void redirectToDownloadQrCodeScanner(final Context context) {
 
+		Toast.makeText(context, context.getString(R.string.toast_installQrCodeScanner), Toast.LENGTH_LONG).show();
+		
 		final Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+AndroidToolsDependencies.packetZXingQrcodeScanner));
 		final Intent binaryIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/zxing/downloads/list"));
 	
@@ -27,6 +30,8 @@ public class AndroidTools {
 	@SuppressWarnings("unused")
 	public static void redirectToDownloadDefaultWallet(final Context context)
 	{
+		
+		Toast.makeText(context, context.getString(R.string.toast_installWallet), Toast.LENGTH_LONG).show();
 		
 		Intent marketIntent;
 		if (CoreTools.RUNNING_ON_TESTNET) {
