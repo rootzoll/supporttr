@@ -1,8 +1,9 @@
 Supporttr Android App - Monthly Bitcoin donations with fixed budget
 =========
 christian@geektank.de
+www.supporttr.net
 
-State: Alpha --> First test version from 6:30am hackathon
+State: First release version from the hackathon
 
 Berlin Texas Bitcoin Hackathon 2014
 
